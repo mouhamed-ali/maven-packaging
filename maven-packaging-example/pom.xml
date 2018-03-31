@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>maven-packaging</artifactId>
+        <groupId>org.maven.tutorial.examples</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>maven-packaging-example</artifactId>
+
+    <properties>
+        <our.main.class>org.maven.tutorial.examples.Application</our.main.class>
+        <delivery.dir>${project.build.directory}/${artifactId}/${version}</delivery.dir>
+    </properties>
+
+    <dependencies>
+        <!-- oracle jdbc driver -->
+        <dependency>
+            <groupId>com.oracle.jdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <version>12.2.0.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!-- check this for more information : http://www.baeldung.com/install-local-jar-with-maven/
+        there is an oracle dependency error in the project : to install the oracle jar in your .m2 you must
+        execute 'mvn validate && mvn clean install' on the command line before you run the application -->
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <groupId>com.oracle.jdbc</groupId>
+                    <artifactId>ojdbc8</artifactId>
+                    <version>12.2.0.1</version>
+                    <packaging>jar</packaging>
+                    <file>${basedir}/dependencies/ojdbc8-12.2.0.1.jar</file>
+                    <generatePom>true</generatePom>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install-jar-lib</id>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Copy the project dependencies -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${delivery.dir}/lib/</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Copy project resources -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${delivery.dir}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources/</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Make this jar executable -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>jar-package</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>${artifactId}-${version}</finalName>
+                            <outputDirectory>${delivery.dir}/</outputDirectory>
+                            <excludes>
+                                <exclude>*.properties</exclude>
+                                <exclude>*.xml</exclude>
+                            </excludes>
+                            <archive>
+                                <manifest>
+                                    <addClasspath>true</addClasspath>
+                                    <mainClass>${our.main.class}</mainClass>
+                                    <classpathPrefix>./lib/</classpathPrefix>
+                                </manifest>
+                                <manifestEntries>
+                                    <!--
+                                        the manifestEntries configuration will add the dependencies of the last declared class path
+                                        (in the manifest configuration) to the META-INF/MANIFEST.MF delivery jar file (its a way to set
+                                        a jar classpath).
+                                    -->
+                                    <Class-Path>.</Class-Path>
+                                </manifestEntries>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+
+        <!-- we will export the TestDataBaseConnectivity.sql to the jar file. by default maven export only .class
+         files from src/main/resources -->
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.sql</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+
+    </build>
+
+
+</project>
