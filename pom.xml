@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>maven-packaging-example</module>
+        <module>maven-packaging-assembly</module>
     </modules>
     <packaging>pom</packaging>
 
