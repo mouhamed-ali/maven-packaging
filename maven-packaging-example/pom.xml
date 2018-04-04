@@ -95,6 +95,11 @@
             </plugin>
 
             <!-- Make this jar executable -->
+            <!--
+                the maven-jar-plugin will add the dependencies of the last declared class path
+                (in the manifest configuration) to the META-INF/MANIFEST.MF delivery jar file (its a way to set
+                a jar classpath).
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -119,11 +124,6 @@
                                     <classpathPrefix>./lib/</classpathPrefix>
                                 </manifest>
                                 <manifestEntries>
-                                    <!--
-                                        the manifestEntries configuration will add the dependencies of the last declared class path
-                                        (in the manifest configuration) to the META-INF/MANIFEST.MF delivery jar file (its a way to set
-                                        a jar classpath).
-                                    -->
                                     <Class-Path>.</Class-Path>
                                 </manifestEntries>
                             </archive>

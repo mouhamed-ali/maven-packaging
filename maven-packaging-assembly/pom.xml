@@ -18,71 +18,76 @@
     </properties>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-            <resource>
-                <directory>src/main/java</directory>
-            </resource>
-        </resources>
-        <sourceDirectory>src/main/java</sourceDirectory>
-        <testSourceDirectory>src/test/java</testSourceDirectory>
         <plugins>
-
             <!-- not necessary to use the compiler plugin -->
-        <plugin>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.6.1</version>
-            <configuration>
-                <source>${java.version}</source>
-                <target>${java.version}</target>
-            </configuration>
-        </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
 
-            <!-- this plugin will add dependencies to the META-INF/MANIFEST.MF delivery jar file -->
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>3.0.2</version>
-            <configuration>
-                <archive>
-                    <manifest>
-                        <addClasspath>true</addClasspath>
-                        <!-- our jar will be extracted to project-name/bin and its class path will be in project-name/lib -->
-                        <classpathPrefix>../lib/</classpathPrefix>
-                        <mainClass>${our.main.class}</mainClass>
-                    </manifest>
-                </archive>
-            </configuration>
-        </plugin>
+            <!--
+                this plugin will add dependencies to the META-INF/MANIFEST.MF delivery jar file
+                check this : https://maven.apache.org/shared/maven-archiver/examples/classpath.html
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <excludes>
+                        <!-- exclude our configuration files from delivery jar file -->
+                        <!--<exclude>logback.xml</exclude>-->
+                        <exclude>*.xml</exclude>
+                        <exclude>*.properties</exclude>
+                        <exclude>**/scripts/*</exclude>
+                    </excludes>
+
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <!-- our jar will be extracted to project-name/bin and its class path will be in project-name/lib -->
+                            <classpathPrefix>../lib/</classpathPrefix>
+                            <mainClass>${our.main.class}</mainClass>
+                        </manifest>
+
+                        <manifestEntries>
+                            <!-- include our configuration files to the delivery jar file (from outside the jar) -->
+                            <Class-Path>../conf/</Class-Path>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
 
             <!-- assembly plugin configuration (check the src/assembly/assembly-descriptor.xml file to get rhe full assembly configuration -->
-        <plugin>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <version>3.0.0</version>
-            <executions>
-                <execution>
-                    <id>make-assembly</id>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>single</goal>
-                    </goals>
-                    <configuration>
-                        <appendAssemblyId>false</appendAssemblyId>
-                        <finalName>${delivery.file.name}</finalName>
-                        <archive>
-                            <manifest>
-                                <mainClass>org.maven.tutorial.examples.Application</mainClass>
-                            </manifest>
-                        </archive>
-                        <descriptors>
-                            <descriptor>src/assembly/assembly-descriptor.xml</descriptor>
-                        </descriptors>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <finalName>${delivery.file.name}</finalName>
+                            <archive>
+                                <manifest>
+                                    <mainClass>org.maven.tutorial.examples.Application</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptors>
+                                <descriptor>src/assembly/assembly-descriptor.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
