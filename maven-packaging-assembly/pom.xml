@@ -17,6 +17,33 @@
         <delivery.file.name>assembly-packaging</delivery.file.name>
     </properties>
 
+    <repositories>
+        <!--
+            another wat to add our oracle jdbc jar to the maven dependencies is to define an in-project repository
+         -->
+        <repository>
+            <id>in-project</id>
+            <name>In Project Repo</name>
+            <releases>
+                <enabled>true</enabled>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <url>file://${project.basedir}/dependencies</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!-- oracle jdbc driver -->
+        <dependency>
+            <groupId>com.oracle.jdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <version>12.2.0.1</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <!-- not necessary to use the compiler plugin -->
