@@ -13,7 +13,7 @@
 
     <properties>
         <our.main.class>org.maven.tutorial.examples.Application</our.main.class>
-        <delivery.dir>${project.build.directory}/${artifactId}/${version}</delivery.dir>
+        <delivery.dir>${project.build.directory}/${artifactId}-${buildTimeStamp}/${version}</delivery.dir>
     </properties>
 
     <dependencies>
@@ -22,6 +22,13 @@
             <groupId>com.oracle.jdbc</groupId>
             <artifactId>ojdbc8</artifactId>
             <version>12.2.0.1</version>
+        </dependency>
+
+        <!-- dependency used to generate the timestamp -->
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-archiver</artifactId>
+            <version>2.2</version>
         </dependency>
     </dependencies>
 
@@ -130,6 +137,27 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <!-- we use this plugin to generate a timestamp property -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create-timestamp</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <doCheck>true</doCheck>
+                    <doUpdate>true</doUpdate>
+                    <timestampFormat>yyyyMMddHHmmss</timestampFormat>
+                    <timestampPropertyName>buildTimeStamp</timestampPropertyName>
+                </configuration>
             </plugin>
 
         </plugins>
