@@ -9,11 +9,19 @@
     <fileSets>
         <fileSet>
             <directory>src/main/resources</directory>
-            <outputDirectory>${delivery.file.name}/conf</outputDirectory>
+            <outputDirectory>${delivery.file.name}/${project.version}/conf</outputDirectory>
             <fileMode>0664</fileMode>
             <includes>
                 <include>*.properties</include>
                 <include>*.xml</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources/scripts</directory>
+            <outputDirectory>${delivery.file.name}/${project.version}/bin</outputDirectory>
+            <fileMode>0764</fileMode>
+            <includes>
+                <include>*.sh</include>
             </includes>
         </fileSet>
     </fileSets>
@@ -21,7 +29,7 @@
     <files>
         <file>
             <source>${project.build.directory}/${project.build.finalName}.${project.packaging}</source>
-            <outputDirectory>${delivery.file.name}/bin</outputDirectory>
+            <outputDirectory>${delivery.file.name}/${project.version}/bin</outputDirectory>
             <destName>${delivery.file.name}.jar</destName>
         </file>
     </files>
@@ -30,7 +38,7 @@
         <dependencySet>
             <unpack>false</unpack>
             <scope>runtime</scope>
-            <outputDirectory>${delivery.file.name}/lib</outputDirectory>
+            <outputDirectory>${delivery.file.name}/${project.version}/lib</outputDirectory>
             <excludes>
                 <exclude>${project.groupId}:${project.groupId}:${project.packaging}</exclude>
             </excludes>

@@ -42,6 +42,25 @@
             <artifactId>ojdbc8</artifactId>
             <version>12.2.0.1</version>
         </dependency>
+
+        <!-- this dependency is used to create the timestamp for the delivery file name -->
+        <!-- we must add the exclusion tag to this dependency otherwise we will have a jars conflict
+        (this dependency use slf4j and the same thing for logback)-->
+        <dependency>
+            <groupId>org.codehaus.gmaven</groupId>
+            <artifactId>gmaven-plugin</artifactId>
+            <version>1.4</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.sonatype.gossip</groupId>
+                    <artifactId>gossip</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
     <build>
@@ -102,7 +121,7 @@
                         </goals>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
-                            <finalName>${delivery.file.name}</finalName>
+                            <finalName>${delivery.file.name}-${project.version}-${timestamp}</finalName>
                             <archive>
                                 <manifest>
                                     <mainClass>org.maven.tutorial.examples.Application</mainClass>
@@ -111,6 +130,40 @@
                             <descriptors>
                                 <descriptor>src/assembly/assembly-descriptor.xml</descriptor>
                             </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- configure the timestamp property (gmaven-plugin framework) -->
+            <plugin>
+                <groupId>org.codehaus.gmaven</groupId>
+                <artifactId>gmaven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <id>set-custom-property</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <source>
+                                def timestamp = new Date().format('MMddyyyy.HHmmss')
+                                project.properties.setProperty('timestamp', timestamp)
+                            </source>
+                        </configuration>
+                    </execution>
+                    <execution><!-- for demonstration purpose -->
+                        <id>show-custom-property</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <source>
+                                println project.properties['timestamp']
+                            </source>
                         </configuration>
                     </execution>
                 </executions>
