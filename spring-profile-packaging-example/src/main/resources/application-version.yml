@@ -1,6 +1,6 @@
 info:
   app:
-    name: externalisation
+    name: externalization
     description: externalize the applicaiton properties of a spring project based its profiles
     version: @project.version@
 

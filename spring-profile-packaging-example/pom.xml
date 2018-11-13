@@ -40,7 +40,7 @@
             <resource>
                 <directory>src/main/resources/common</directory>
                 <filtering>false</filtering>
-                <targetPath>../common-files</targetPath>
+                <targetPath>../common</targetPath>
                 <!-- copy the common files in another directory -->
             </resource>
 
