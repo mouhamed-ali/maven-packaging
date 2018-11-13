@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@PropertySource("classpath:description.properties")
+@PropertySource("classpath:common/description.properties")
 public class ShowAppProprties {
 
     @Autowired
