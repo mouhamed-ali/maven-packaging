@@ -11,5 +11,51 @@
 
     <artifactId>spring-profile-packaging-example</artifactId>
 
+    <properties>
+        <!-- profiles configuration -->
+        <springActiveProfile>dev</springActiveProfile>
+        <!-- the default profile is dev, to change it build the app using mvn clean install -DspringActiveProfile=[desired profile] -->
+
+        <!-- build jar configuration -->
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>dd/MM/yyyy HH:mm:ss:SSS</maven.build.timestamp.format>
+    </properties>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <!-- using this config the build jar will not be changed in every version -->
+
+        <resources>
+            <!-- step 1 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>common/**</exclude>
+                    <!-- we must not filter the static properties -->
+                </excludes>
+            </resource>
+
+            <!-- step 2 -->
+            <resource>
+                <directory>src/main/resources/common</directory>
+                <filtering>false</filtering>
+                <targetPath>../common-files</targetPath>
+                <!-- copy the common files in another directory -->
+            </resource>
+
+            <!-- step 3 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>application.yml</include>
+                    <include>application-${springActiveProfile}.yml</include>
+                </includes>
+                <targetPath>../config-files</targetPath>
+                <!-- our app configuration files -->
+            </resource>
+        </resources>
+    </build>
 
 </project>

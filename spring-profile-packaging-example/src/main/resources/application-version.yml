@@ -1,0 +1,9 @@
+info:
+  app:
+    name: externalisation
+    description: externalize the applicaiton properties of a spring project based its profiles
+    version: @project.version@
+
+build:
+  time: @timestamp@
+  #check the @ properties in the pom.xml file

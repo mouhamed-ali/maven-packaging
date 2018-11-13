@@ -1,3 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: @springActiveProfile@, version
+    # springActiveProfile : is the current profile used by the user to build the app. it can be passed as parameter in the mvn clean install command
+    # otherwise we will use the default profile 'dev' (you can find it in the pom.xml file)
+    # version is a profile that contains our application build details as the version, the build time ... check the application-version.yml in the build jar
