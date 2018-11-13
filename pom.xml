@@ -10,6 +10,7 @@
     <modules>
         <module>maven-packaging-example</module>
         <module>maven-packaging-assembly</module>
+        <module>spring-profile-packaging-example</module>
     </modules>
     <packaging>pom</packaging>
 
