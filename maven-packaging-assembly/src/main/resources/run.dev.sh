@@ -3,7 +3,7 @@ echo -----------------------------------------------------------------
 echo                Start packaging
 echo -----------------------------------------------------------------
 
-cd ../../.. && mvn validate && mvn clean package
+cd ../../.. && mvn clean package
 
 if [ "$?" -ne "0" ]; then
   echo "Sorry, a maven error has occured"

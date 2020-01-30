@@ -72,7 +72,7 @@ This contains all the dependencies of application.
 You can find this repo in the pom.xml file and the oracle jar file in the dependencies directory which means it is safe for
 anyone we use this project.
 
-After pulling it, He should run `mvn validate` to create the local repo and then we can package and run our app.
+After pulling it, He should run `mvn clean package` to create the local repo and then we can run our app.
 
 ### sql directory
 
@@ -93,7 +93,7 @@ This is a simple spring boot application which exposes an endpoint to expose all
 Create the delivery file :
 
 ```shell script
-$ mvn validate && mvn clean package
+$ mvn clean package
 ```
 
 Run the app :
