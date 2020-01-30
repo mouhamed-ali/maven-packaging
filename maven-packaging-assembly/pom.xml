@@ -86,10 +86,13 @@
                 <configuration>
                     <excludes>
                         <!-- exclude our configuration files from delivery jar file -->
-                        <!--<exclude>logback.xml</exclude>-->
+                        <!--
                         <exclude>*.xml</exclude>
                         <exclude>*.properties</exclude>
-                        <exclude>**/scripts/*</exclude>
+                        <exclude>**/sh/*</exclude>
+                        -->
+                        <exclude>*</exclude>
+                        <exclude>*/*</exclude>
                     </excludes>
 
                     <archive>

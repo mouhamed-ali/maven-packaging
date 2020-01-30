@@ -113,6 +113,8 @@ or you can just run the `run.dev.sh` script from the resources file. This script
 
 To stop the app, you can click on ctrl+C from the current console or use the `stop.sh` script from an another one. You will find this script in the bin directory.
 
+And to get the classpath of the generated jar have a look at its MANIFEST.MF file.
+
 ### Running Tests
 
 After running the app you should have this log (if everything is OK):
