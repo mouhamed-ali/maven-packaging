@@ -162,7 +162,7 @@
 
         </plugins>
 
-        <!-- we will export the TestDataBaseConnectivity.sql to the jar file. by default maven export only .class
+        <!-- we will export the select.sql to the jar file. by default maven export only .class
          files from src/main/resources -->
         <resources>
             <resource>
