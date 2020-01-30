@@ -19,7 +19,7 @@
 
     <repositories>
         <!--
-            another wat to add our oracle jdbc jar to the maven dependencies is to define an in-project repository
+            on of the solutions to add our oracle jdbc jar to the maven dependencies is to define an in-project repository
          -->
         <repository>
             <id>in-project</id>
