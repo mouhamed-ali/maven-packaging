@@ -1,0 +1,1 @@
+kill $(cat ./maven-packaging-assembly.pid)
