@@ -48,9 +48,9 @@ The delivery file to send to our client is assembly-packaging-1.0-SNAPSHOT-TIMES
 
 As you can see in the structure :
  
-1. the bin directory contains our application jar and some scripts to run and stop it,
+1. the bin directory contains our application jars and some scripts to run and stop it,
 2. the conf directory contains our app configuration files,
-3. the lib directory contains the jar dependencies of our project,
+3. the lib directory contains the jars dependencies of our project,
 4. the sql directory contains the sql scripts to create and populate our database.
 
 ### bin directory
@@ -69,25 +69,26 @@ these files without creating a new distribution file.
 This contains all the dependencies of application.
 
 `PN` : as the oracle jdbc driver does not exist in the maven remote repository, we have created a local one to store it.
-You can find this repo in the pom.xml file and the oracle jar file in the dependencies project which means it is safe for
+You can find this repo in the pom.xml file and the oracle jar file in the dependencies directory which means it is safe for
 anyone we use this project.
 
-After pulling it, He should run `mvn validate` to create the local repo (using the jar oracle) and then we can package and run our app.
-
-### assembly description
-
-To know more about how to structure your delivery :
-
-- check the pom.xml to know how to declare variables and how to generate the timestamp
-- all the structure definition of our delivery file is in the `src/assembly/assembly-descriptor.xml`
+After pulling it, He should run `mvn validate` to create the local repo and then we can package and run our app.
 
 ### sql directory
 
 This directory contains an example of sql scripts to update the database or create it. Well the sql scripts to upgrade the database.
 
+### assembly description
+
+To know more about how to structure your delivery :
+
+- check the pom.xml to know how to declare variables and how to generate a timestamp
+- all the structure definition of our delivery file is in the `src/assembly/assembly-descriptor.xml`
+
+
 ### Running the app
 
-This is 
+This is a simple spring boot application which exposes an endpoint to expose all properties of the app.
 
 Create the delivery file :
 
@@ -110,11 +111,11 @@ $ cd target && \
 
 or you can just run the `run.dev.sh` script from the resources file. This script will build and run the project. If you modify the version or the app name you have to make these changes in the script also.
 
-To stop the app, you can click on ctrl+C form the current console or use the `stop.sh` script. You will find it in the bin directory from the generated delivery archive.
+To stop the app, you can click on ctrl+C from the current console or use the `stop.sh` script from an another one. You will find this script in the bin directory.
 
 ### Running Tests
 
-After running the app you should have a line like this (if everything is OK):
+After running the app you should have this log (if everything is OK):
 
 ```log
 15:19:23.688 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter - Registering beans for JMX exposure on startup
@@ -176,13 +177,13 @@ in my case this dir is located here `target/assembly-packaging-1.0-SNAPSHOT-0130
 
 - executing the `stop.sh` script
 
-From the parent dir, go to the conf directory and :
+From the super dir (cd ..), go to the conf directory and :
 
 1. modify the `logback-spring.xml` by making the root log level to WARN `<root level="WARN">`
-2. add a new property to the app-parameters.properties file. I added custom.prop `custom.prop=Hello-World!!!`
+2. add a new property to the app-parameters.properties file. I added this `custom.prop=Hello-World!!!`
 3. go to the application.properties and modify the port to 8070 `server.port=8090`
 
-Now, return to the bin dir and run the start.sh script.
+Now, return to the bin dir and run the `start.sh` script.
 
 As we can see, this time we haven't much logs :
 
