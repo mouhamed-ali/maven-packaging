@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.util.StringUtils;
+import org.springframework.util.Assert;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -15,6 +15,7 @@ import java.util.Scanner;
  * check this for details and more examples
  * http://roufid.com/load-multiple-configuration-files-different-directories-spring-boot/
  */
+
 public class Application {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
@@ -26,13 +27,15 @@ public class Application {
         String configFilePath = getConfigFilesDir();
         String commonFiles = getCommonFilesDir();
         reader.close();
+
         String applicationFiles = "classpath:application-version.yml," + configFilePath + "," + commonFiles;
         LOGGER.info("spring.config.location : {}", applicationFiles);
 
         new SpringApplicationBuilder(Application.class)
                 .properties(
                         "spring.config.name:application,description",
-                        "spring.config.location:" + applicationFiles)
+                        "spring.config.location:" + applicationFiles
+                )
                 .build()
                 .run(args);
     }
@@ -41,29 +44,28 @@ public class Application {
 
         System.out.println("Enter the common directory full path : ");
         String result = reader.next();
-        return transform(result, "common");
+        return transform(result);
     }
 
-    private static String transform(String result, String dirName) {
+    private static String transform(String result) {
 
-        if (!StringUtils.hasLength(result))
-            return null;
+        Assert.hasLength(result, "The directory name must not be null or empty");
+
         if (!result.endsWith("/"))
             result += "/";
-        if (!result.endsWith(dirName + "/"))
-            result += dirName + "/";
 
         File dir = Paths.get(result).toFile();
         if (!dir.exists() || !dir.isDirectory())
-            throw new RuntimeException(String.format("%s does not exist", result));
+            throw new RuntimeException(String.format("%s directory does not exist", result));
 
-        return "classpath:" + result + ",file:" + result;
+        //return "classpath:" + result + ",file:" + result;
+        return "file:" + result;
     }
 
     private static String getConfigFilesDir() {
 
-        System.out.println("Enter the config-files directory full path : ");
+        System.out.println("Enter the config directory full path : ");
         String result = reader.next();
-        return transform(result, "config-files");
+        return transform(result);
     }
 }

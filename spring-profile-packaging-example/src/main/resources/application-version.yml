@@ -3,6 +3,8 @@ info:
     name: externalization
     description: externalize the applicaiton properties of a spring project based its profiles
     version: @project.version@
+    # project.version is a property defined in the pom.xml file
+    build-time: @timestamp@
 
 build:
   time: @timestamp@

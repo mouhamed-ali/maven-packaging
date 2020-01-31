@@ -18,18 +18,31 @@
 
         <!-- build jar configuration -->
         <timestamp>${maven.build.timestamp}</timestamp>
-        <maven.build.timestamp.format>dd/MM/yyyy HH:mm:ss:SSS</maven.build.timestamp.format>
+        <maven.build.timestamp.format>MM/dd/yyyy HH:mm:ss:SSS</maven.build.timestamp.format>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <finalName>${project.artifactId}</finalName>
         <!-- using this config the build jar will not be changed in every version -->
 
         <resources>
-            <!-- step 1 -->
+            <!-- step 1 : exclude all yml from the jar file (leave only the application-version.yml file) -->
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+                <includes>
+                    <include>
+                        application-version.yml
+                    </include>
+                </includes>
                 <excludes>
                     <exclude>common/**</exclude>
                     <!-- we must not filter the static properties -->
@@ -56,6 +69,20 @@
                 <!-- our app configuration files -->
             </resource>
         </resources>
-    </build>
 
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.2.4.RELEASE</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

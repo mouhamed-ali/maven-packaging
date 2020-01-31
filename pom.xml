@@ -17,6 +17,7 @@
     <properties>
         <logback.version>1.2.3</logback.version>
         <jcloverslf4j.version>1.7.25</jcloverslf4j.version>
+        <spring.boot.version>1.5.10.RELEASE</spring.boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -27,7 +28,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>1.5.10.RELEASE</version>
+            <version>${spring.boot.version}</version>
         </dependency>
 
         <!-- logback dependencies -->

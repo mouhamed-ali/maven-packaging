@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ShowAppProprties {
+public class ShowProperties {
 
     @Autowired
     private ApplicationProperties applicationProperties;
@@ -15,8 +15,8 @@ public class ShowAppProprties {
     private Environment env;
 
 
-    @GetMapping
-    public String showProperty() {
+    @GetMapping("/platform")
+    public String showPlatform() {
 
         return applicationProperties.getPlatform();
     }
