@@ -183,7 +183,7 @@ From the super dir (cd ..), go to the conf directory and :
 
 1. modify the `logback-spring.xml` by making the root log level to WARN `<root level="WARN">`
 2. add a new property to the app-parameters.properties file. I added this `custom.prop=Hello-World!!!`
-3. go to the application.properties and modify the port to 8070 `server.port=8090`
+3. go to the application.properties and modify the port to 8070 `server.port=8070`
 
 Now, return to the bin dir and run the `start.sh` script.
 
