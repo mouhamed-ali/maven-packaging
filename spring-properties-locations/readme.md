@@ -1,6 +1,6 @@
 # Description
 
-in this example we will show you how you can override your spring boot application without changing anything in your code.
+in this example we will show you how you can override your spring boot application properties without changing anything in your code.
 
 ## Overview
 
@@ -38,7 +38,7 @@ You can find all the list of the spring properties here :
 
 - https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#core-properties
 
-To override the config of this app, we have to know how spring will load our application.yml and in which location he will search.
+To override the config of this app, we have to know how spring loads properties files and in which location he will look for them.
 
 According to `ConfigFileApplicationListener`:
 ```java
@@ -149,9 +149,9 @@ logging.file.name -> application.log
 ```
 
 
-The server port has been changed to 8070 and the the modified properties also.
+The server port has been changed to 8070 and the modified properties also.
 
-Now we gonna stop the app, leave the last application.yml file and in the same directory (target) we will create a new directory named `config`. In this last directory, we will create a new file named
+Now we gonna stop the app, leave the last application.yml file and in the same directory (target) we will create a new directory named `config`. In this directory, we will create a new file named
 `application.yml` which have this content :
 
 ```yaml
@@ -191,7 +191,7 @@ Re-run the app now. You'll notice that the log level has changed to INFO.
 
 ![spring-log-after](https://user-images.githubusercontent.com/16627692/73572646-9af59380-4471-11ea-8340-fc7a4121865f.png)
 
-And the port number has be overridden to 9000 now. You can always override properties using the command line.
+And the port number has been overridden to 9000 now. You can always override properties using the command line.
 
 ```shell script
 $ curl localhost:9000/app/properties?property=spring.application.name
