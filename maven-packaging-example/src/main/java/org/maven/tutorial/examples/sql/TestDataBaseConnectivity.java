@@ -13,8 +13,7 @@ import java.nio.file.Files;
 public class TestDataBaseConnectivity {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TestDataBaseConnectivity.class);
-    private static final String SCRIPT_NAME = "sql/select.sql";
-    private static final String SCRIPT_PATH = "sql/" + SCRIPT_NAME;
+    private static final String SCRIPT_NAME = "select.sql";
     private static final String ENCODING = "UTF-8";
 
 
@@ -29,7 +28,7 @@ public class TestDataBaseConnectivity {
 
         try {
 
-            File scriptFile = new ClassPathResource(SCRIPT_PATH).getFile();
+            File scriptFile = new ClassPathResource(SCRIPT_NAME).getFile();
             return new String(Files.readAllBytes(scriptFile.toPath()));
         } catch (Exception ex) {
 
