@@ -13,7 +13,7 @@ you can switch to another file name by specifying a spring.config.name environme
 
 You can pass these properties as a java -jar arguments or specify them as environment parameters. Please have a look at the documentation for more details :
 
-- https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html
+- https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-external-config-application-property-files
 
 In this example we will ask the user to provide these parameters and then we will pass them as properties of the `SpringApplicationBuilder` class. Check the   `Application.java` file.
 
@@ -59,6 +59,10 @@ The exposed info are :
 | info.app.build-time | the build time of the app  |
 
 build-time is not an actuator property. it is a custom property that we've added.
+
+documentation :
+
+- https://docs.spring.io/spring-boot/docs/1.5.10.RELEASE/reference/html/production-ready-endpoints.html
 
 ## Installing the app
 
