@@ -23,4 +23,12 @@ A little project which uses the maven plugins to create distributions files.
    cd project  
    cd project-version  
    cd bin  
-   java -jar project-build-jar  
+   java -jar project-build-jar
+
+   ## spring-profile-packaging-example Module
+   1. mvn clean install
+   2. goto the target directory
+   3. move the common and config-files directories to an another place
+   4. run the app 'java -jar spring-profile-packaging-example.jar'
+   5. introduce the new properties locations (for the common and the config-files directories)
+   6. Test this endpoints ; http://localhost:8080/ ; http://localhost:8080/description

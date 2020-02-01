@@ -1,0 +1,1 @@
+UPDATE users set name='mohamedAli' where id=1;

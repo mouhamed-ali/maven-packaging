@@ -17,11 +17,19 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>src/main/resources/scripts</directory>
+            <directory>src/main/resources/sh</directory>
             <outputDirectory>${delivery.file.name}/${project.version}/bin</outputDirectory>
             <fileMode>0764</fileMode>
             <includes>
                 <include>*.sh</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources/sql</directory>
+            <outputDirectory>${delivery.file.name}/${project.version}/sql</outputDirectory>
+            <fileMode>0764</fileMode>
+            <includes>
+                <include>*.sql</include>
             </includes>
         </fileSet>
     </fileSets>
